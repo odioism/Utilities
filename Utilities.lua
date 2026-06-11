@@ -6,7 +6,7 @@ function utilities.destroy(object: any): ()
 	local methods = {"Destroy", "Disconnect"}
 
 	for _, method in methods do
-		if type(method) == "function" then
+		if type(object[method]) == "function" then
 			local success = pcall(object[method], object)
 
 			if success then

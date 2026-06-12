@@ -1,12 +1,21 @@
 local utilities = {}
 
+function utilities.checkindex(self: any, index: any): boolean
+	assert(self ~= nil, "argument #1 missing or nil")
+	assert(index ~= nil, "argument #2 missing or nil")
+
+	return pcall(function()
+		return self[index]
+	end)
+end
+
 function utilities.destroy(object: any): ()
 	assert(object ~= nil, "argument missing or nil")
 
 	local methods = {"Destroy", "Disconnect"}
 
 	for _, method in methods do
-		if type(object[method]) == "function" then
+		if utilities.checkindex(object, method) and type(object[method]) == "function" then
 			local success = pcall(object[method], object)
 
 			if success then
